@@ -1,5 +1,6 @@
+import moment from 'moment';
 import React, { FunctionComponent, useState } from 'react';
-import { Post } from '../models/models';
+import Post from '../models/Post';
 import '../styles/PostItem.css'
 import CommentList from './CommentList';
 
@@ -23,6 +24,7 @@ const PostItem: FunctionComponent<PostItemProps> = (
         <div className='post-item__content'>
             <p className='post-item__body'>{post.body}</p>
             <img className='post-item__image' src={post.image} />
+            <p>{moment(post.ts).format('DD.MM.YYYY hh:mm')}</p>
         </div>
         <div>
             <button onClick={e => setShowComments(!showComments)}>Комментарии</button>

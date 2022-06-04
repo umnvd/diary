@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { Comment } from '../models/models';
+import Comment from '../models/Comment';
 import '../styles/CommentItem.css'
 
 interface CommentItemProps {

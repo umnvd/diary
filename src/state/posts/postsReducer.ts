@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Post } from '../../models/models'
+import Post from '../../models/Post'
 
 interface PostListState {
     posts: Post[],
@@ -7,13 +7,15 @@ interface PostListState {
     error: string
 }
 
+const initialState: PostListState = {
+    posts: [],
+    isLoading: false,
+    error: ''
+}
+
 const postsSlice = createSlice({
     name: 'posts',
-    initialState: {
-        posts: [],
-        isLoading: false,
-        error: ''
-    } as PostListState,
+    initialState: initialState,
     reducers: {
         fetch: state => {
             state.error = '';

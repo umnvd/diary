@@ -1,4 +1,7 @@
-import { Post, Comment, User } from '../models/models';
+
+import Post from '../models/Post';
+import Comment from '../models/Comment';
+import User from '../models/User';
 
 export const currentUser: User = {
     role: 1,
