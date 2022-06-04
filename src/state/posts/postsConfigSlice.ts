@@ -30,6 +30,8 @@ const postsConfigSlice = createSlice({
         },
         sortChanged: (state, action: PayloadAction<SortConfig>) => {
             state.sort = action.payload;
+            state.currentPage = 1;
+            state.maxPage = 0;
         }
     }
 });

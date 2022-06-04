@@ -13,7 +13,6 @@ export const fetchPosts = () => async (
     const sortConfig = state.postsConfig.sort;
 
     try {
-
         const config: AxiosRequestConfig = {
             params: {
                 _sort: sortConfig.option,
@@ -29,9 +28,11 @@ export const fetchPosts = () => async (
         if (state.postsConfig.maxPage === 0) {
             const totalCount = parseInt(response.headers['x-total-count']);
             dispatch(maxPageReceived(totalCount));
+            console.log('total pages received');
         }
 
-        dispatch(fetched(response.data));
+        const result = [...state.postsUi.posts, ...response.data]
+        dispatch(fetched(result));
     } catch (e) {
         const message = (e as AxiosError).message || 'Ошибка загрузки';
         dispatch(failed(message));
