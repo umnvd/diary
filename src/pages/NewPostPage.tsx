@@ -1,6 +1,6 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { RoutePath } from "../routes/routes";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { RoutePath } from '../routes/routes';
 
 function NewPostPage() {
     return ( <div>

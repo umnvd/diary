@@ -1,8 +1,7 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { useRoutes } from 'react-router-dom';
+import { routeObjects } from './routes/routes';
+import { Toaster } from 'react-hot-toast';
 import './App.css';
-import { routeObjects, RoutePath } from './routes/routes';
 
 function App() {
     const routes = useRoutes(routeObjects);
@@ -10,6 +9,7 @@ function App() {
     return (
         <div className='App'>
             {routes}
+            <Toaster position='bottom-center' />
         </div>
     );
 }
