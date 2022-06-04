@@ -27,8 +27,7 @@ const initialState: PostsState = {
         order: false
     },
     searchQuery: '',
-    dateFilter: defaultDateFilterConfig
-
+    dateFilter: defaultDateFilterConfig,
 }
 
 const postsSlice = createSlice({
@@ -60,7 +59,11 @@ const postsSlice = createSlice({
         dateFilterChanged: (state, action: PayloadAction<DateFilterConfig>) => {
             state.dateFilter = action.payload;
             resetState(state);
-        }
+        },
+        searchQueryChanged: (state, action: PayloadAction<string>) => {
+            state.searchQuery = action.payload;
+            resetState(state);
+        },
     }
 });
 
@@ -79,7 +82,8 @@ export const {
     pageIncremented,
     maxPageReceived,
     sortChanged,
-    dateFilterChanged
+    dateFilterChanged,
+    searchQueryChanged
 } = postsSlice.actions;
 
 export const selectPosts = (state: RootState) => state.posts;

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import DateFilter from '../components/DateFilter';
 import PostItem from '../components/PostItem';
+import SearchBar from '../components/SearchBar';
 import SortSelector from '../components/SortSelector';
 import PagingTrigger from '../components/utils/PagingTrigger';
 import { sortOptions } from '../models/SortConfig';
@@ -11,23 +12,27 @@ import { fetchPosts } from '../state/posts/postsActionCreators';
 import {
     dateFilterChanged,
     pageIncremented,
+    searchQueryChanged,
     selectPosts,
     sortChanged
 } from '../state/posts/postsSlice';
 
 function PostListPage() {
     const dispatch = useAppDispatch();
-    const { posts, isLoading, error, sort, currentPage, dateFilter } = useAppSelector(selectPosts);
+    const { posts, isLoading, error, sort, currentPage, dateFilter, searchQuery } = useAppSelector(selectPosts);
 
     useEffect(() => {
         dispatch(fetchPosts());
         console.log('fetch called')
-    }, [currentPage, sort, dateFilter]);
+    }, [currentPage, sort, dateFilter, searchQuery]);
 
     return (<div>
         <div>
             <NavLink to={RoutePath.NEW_POST}>New</NavLink>
         </div>
+        <SearchBar
+            query={searchQuery}
+            setQuery={query => dispatch(searchQueryChanged(query))} />
         <DateFilter
             config={dateFilter}
             setConfig={config => dispatch(dateFilterChanged(config))} />

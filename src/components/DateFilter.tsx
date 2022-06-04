@@ -10,7 +10,6 @@ interface DateFilterProps {
 const DateFilter: FunctionComponent<DateFilterProps> = (
     { config, setConfig }
 ) => {
-
     const setDate = (date: string, isStart: boolean) => {
         if (date) {
             const ts = parseInt(moment(date).format('x'));
@@ -27,6 +26,11 @@ const DateFilter: FunctionComponent<DateFilterProps> = (
             : ''
     }
 
+    const handleClear = () => {
+        if (config !== defaultDateFilterConfig)
+            setConfig(defaultDateFilterConfig)
+    }
+
     return (<div>
         <input
             type='date'
@@ -39,8 +43,7 @@ const DateFilter: FunctionComponent<DateFilterProps> = (
             value={toStringDate(config.endDate)}
             onChange={e => setDate(e.target.value, false)} />
         <button
-            onClick={() => setConfig(defaultDateFilterConfig)}
-            disabled={config === defaultDateFilterConfig}>
+            onClick={handleClear}>
             Сбросить
         </button>
     </div>);

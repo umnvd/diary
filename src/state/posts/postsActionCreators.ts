@@ -10,7 +10,8 @@ export const fetchPosts = () => async (
     const state = getState();
     const page = state.posts.currentPage;
     const sortConfig = state.posts.sort;
-    const dateFilterConfig = state.posts.dateFilter
+    const dateFilterConfig = state.posts.dateFilter;
+    const searchQuery = state.posts.searchQuery;
 
     try {
         const config: AxiosRequestConfig = {
@@ -28,6 +29,10 @@ export const fetchPosts = () => async (
 
         if (dateFilterConfig.endDate) {
             config.params = {...config.params, ts_lte: dateFilterConfig.endDate};
+        }
+
+        if (searchQuery) {
+            config.params = {...config.params, title_like: searchQuery};
         }
 
         dispatch(fetchStarted());
