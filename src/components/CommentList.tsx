@@ -1,9 +1,9 @@
 import axios, { AxiosError } from 'axios';
 import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
+import CommentItem from './CommentItem';
 import Post from '../models/Post';
 import Comment from '../models/Comment';
-import CommentItem from './CommentItem';
 import User from '../models/User';
 
 interface CommentListProps {

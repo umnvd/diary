@@ -23,7 +23,7 @@ const PostItem: FunctionComponent<PostItemProps> = (
         </div>
         <div className='post-item__content'>
             <p className='post-item__body'>{post.body}</p>
-            <img className='post-item__image' src={post.image} />
+            <img className='post-item__image' src={'http://localhost:3010/images/' + post.image} height={150}/>
             <p>{moment(post.ts).format('DD.MM.YYYY hh:mm')}</p>
         </div>
         <div>

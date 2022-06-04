@@ -1,36 +1,38 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Post from '../../models/Post'
+import { RootState } from '../store';
 
-interface PostListState {
+interface PostsUiState {
     posts: Post[],
     isLoading: boolean,
     error: string
 }
 
-const initialState: PostListState = {
+const initialState: PostsUiState = {
     posts: [],
     isLoading: false,
     error: ''
 }
 
-const postsSlice = createSlice({
-    name: 'posts',
+const postsUiSlice = createSlice({
+    name: 'postsUi',
     initialState: initialState,
     reducers: {
-        fetch: state => {
+        fetchStarted: state => {
             state.error = '';
             state.isLoading = true;
         },
-        success: (state, action: PayloadAction<Post[]>) => {
+        fetched: (state, action: PayloadAction<Post[]>) => {
             state.isLoading = false;
             state.posts = action.payload;
         },
-        error: (state, action: PayloadAction<string>) => {
+        failed: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload;
         }
     }
 });
 
-export const postsActions = postsSlice.actions;
-export const postsReducer = postsSlice.reducer;
+export const selectPostsUi = (state: RootState) => state.postsUi;
+export const {fetchStarted, fetched, failed} = postsUiSlice.actions;
+export default postsUiSlice.reducer;
