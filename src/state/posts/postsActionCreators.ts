@@ -1,16 +1,16 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
 import Post from '../../models/Post'
 import { AppDispatch, RootState } from '../store';
-import { maxPageReceived } from './postsConfigSlice';
-import { failed, fetched, fetchStarted } from './postsUiSlice';
+import { failed, fetched, fetchStarted, maxPageReceived } from './postsSlice';
 
 export const fetchPosts = () => async (
     dispatch: AppDispatch,
     getState: () => RootState
 ) => {
     const state = getState();
-    const page = state.postsConfig.currentPage;
-    const sortConfig = state.postsConfig.sort;
+    const page = state.posts.currentPage;
+    const sortConfig = state.posts.sort;
+    const dateFilterConfig = state.posts.dateFilter
 
     try {
         const config: AxiosRequestConfig = {
@@ -22,16 +22,24 @@ export const fetchPosts = () => async (
             }
         }
 
+        if (dateFilterConfig.startDate) {
+            config.params = {...config.params, ts_gte: dateFilterConfig.startDate};
+        }
+
+        if (dateFilterConfig.endDate) {
+            config.params = {...config.params, ts_lte: dateFilterConfig.endDate};
+        }
+
         dispatch(fetchStarted());
         const response = await axios.get<Post[]>('http://localhost:3010/posts', config);
 
-        if (state.postsConfig.maxPage === 0) {
+        if (state.posts.maxPage === 0) {
             const totalCount = parseInt(response.headers['x-total-count']);
             dispatch(maxPageReceived(totalCount));
             console.log('total pages received');
         }
 
-        const result = [...state.postsUi.posts, ...response.data]
+        const result = [...state.posts.posts, ...response.data]
         dispatch(fetched(result));
     } catch (e) {
         const message = (e as AxiosError).message || 'Ошибка загрузки';

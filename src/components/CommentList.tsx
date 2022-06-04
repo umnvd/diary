@@ -1,6 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { FunctionComponent, useEffect, useMemo, useState } from 'react';
-import toast from 'react-hot-toast';
+import { FunctionComponent, useEffect, useState } from 'react';
 import CommentItem from './CommentItem';
 import Post from '../models/Post';
 import Comment from '../models/Comment';
@@ -41,7 +40,6 @@ const CommentList: FunctionComponent<CommentListProps> = (
             testComment
         )
             .then(r => setComments([...comments, r.data]))
-            .catch(e => toast.error((e as Error).message));
     }
 
     useEffect(() => {

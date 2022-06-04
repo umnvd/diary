@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import SortOption, { SortConfig } from '../models/Sort';
+import SortConfig, { SortOption } from '../models/SortConfig';
 
 interface SortSelectorProps {
     options: SortOption[],
