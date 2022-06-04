@@ -2,8 +2,8 @@ import { FunctionComponent } from 'react';
 import SortConfig, { SortOption } from '../models/SortConfig';
 
 interface SortSelectorProps {
-    options: SortOption[],
-    config: SortConfig,
+    options: SortOption[];
+    config: SortConfig;
     setConfig: (config: SortConfig) => void;
 }
 

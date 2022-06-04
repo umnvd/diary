@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import PostForm from '../components/PostForm';
 import { RoutePath } from '../routes/routes';
 
 function NewPostPage() {
@@ -7,7 +8,7 @@ function NewPostPage() {
         <div>
             <NavLink to={RoutePath.POST_LIST}>Home</NavLink>
         </div>
-        New post
+        <PostForm />
     </div> );
 }
 

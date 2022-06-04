@@ -19,7 +19,7 @@ export const fetchPosts = () => async (
                 _sort: sortConfig.option,
                 _order: sortConfig.order ? 'asc' : 'desc',
                 _page: page,
-                _limit: 5, // hardcoded
+                _limit: 3, // hardcoded
             }
         }
 

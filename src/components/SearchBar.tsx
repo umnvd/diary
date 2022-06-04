@@ -1,8 +1,8 @@
 import { FunctionComponent } from 'react';
 
 interface SearchBarProps {
-    query: string,
-    setQuery: (query: string) => void
+    query: string;
+    setQuery: (query: string) => void;
 }
 
 const SearchBar: FunctionComponent<SearchBarProps> = (

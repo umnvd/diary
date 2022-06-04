@@ -3,7 +3,7 @@ import { FunctionComponent } from 'react';
 import DateFilterConfig, { defaultDateFilterConfig } from '../models/DateFilterConfig';
 
 interface DateFilterProps {
-    config: DateFilterConfig,
+    config: DateFilterConfig;
     setConfig: (config: DateFilterConfig) => void;
 }
 
