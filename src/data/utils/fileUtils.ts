@@ -32,7 +32,3 @@ export function fileSchema(file: File): FileSchema {
         name: file.name
     }
 }
-
-export function getUrl(image: string) {
-    return 'http://localhost:3010/images/' + image;
-}

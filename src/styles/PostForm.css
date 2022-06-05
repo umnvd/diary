@@ -11,8 +11,17 @@
     margin: 0px;
 }
 
+.post-form textarea {
+    min-width: 400px;
+}
+
 .image-cropper {
     margin: 10px 0;
     height: 400px;
     width: 100%;
+}
+
+.form-error {
+    color: red;
+    font-size: 16px;
 }

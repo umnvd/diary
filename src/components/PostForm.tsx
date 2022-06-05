@@ -1,8 +1,8 @@
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import Post, { PostData } from '../models/Post';
-import { dataUrlToFile, FileSchema, fileSchema, getUrl, readFileDataUrl } from '../data/utils/fileUtils';
+import { dataUrlToFile, FileSchema, fileSchema, readFileDataUrl } from '../data/utils/fileUtils';
 import { array, object, string } from 'yup';
-import { Formik, FieldArray, FormikHelpers, FormikHandlers, useFormikContext, FormikContextType } from 'formik';
+import { Formik, FieldArray, useFormikContext } from 'formik';
 import { mixed } from 'yup';
 import { Cropper } from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
@@ -10,6 +10,9 @@ import '../styles/PostForm.css';
 import Input from './common/Input';
 import TextArea from './common/TextArea';
 import Button from './common/Button';
+import { getImageUrl } from '../data/axiosInstance';
+
+// Please, don't watch that
 
 interface PostFormValues {
     title: string;
@@ -104,7 +107,7 @@ const PostForm: FunctionComponent<PostFormProps> = (
 
     useEffect(() => {
         if (post?.image) {
-            setImageUrl(getUrl(post.image));
+            setImageUrl(getImageUrl(post.image));
         }
     }, [post, imageUrl])
 
@@ -126,7 +129,7 @@ const PostForm: FunctionComponent<PostFormProps> = (
                             onBlur={handleBlur}
                             value={values.title} />
                         {touched.title && errors.title
-                            && <p>{errors.title}</p>}
+                            && <p className='form-error'>{errors.title}</p>}
                     </div>
                     <div>
                         <label htmlFor='body'>Запись<br /></label>
@@ -136,7 +139,7 @@ const PostForm: FunctionComponent<PostFormProps> = (
                             onBlur={handleBlur}
                             value={values.body} />
                         {touched.body && errors.body
-                            && <p>{errors.body}</p>}
+                            && <p className='form-error'>{errors.body}</p>}
                     </div>
                     <label htmlFor='image'>Изображение<br /></label>
                     <FieldArray name='image'>
@@ -162,7 +165,9 @@ const PostForm: FunctionComponent<PostFormProps> = (
                         )}
                     </FieldArray>
                     {touched.image && errors.image
-                        && errorMessages(errors.image).map(message => <p key={message}>{message}</p>)}
+                        && errorMessages(errors.image).map(message =>
+                            <p className='form-error' key={message}>{message}</p>
+                        )}
                     <Cropper
                         src={imageUrl}
                         className='image-cropper'

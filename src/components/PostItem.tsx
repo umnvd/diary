@@ -1,5 +1,6 @@
-import moment from 'moment';
-import React, { FunctionComponent, useCallback, useState } from 'react';
+import { FunctionComponent, useCallback, useState } from 'react';
+import { getImageUrl } from '../data/axiosInstance';
+import { tsToDateTime } from '../data/utils/dateUtils';
 import Post from '../models/Post';
 import '../styles/Post.css'
 import CommentList from './CommentList';
@@ -26,11 +27,11 @@ const PostItem: FunctionComponent<PostItemProps> = (
         </div>
         <div className='post-item__content'>
             <p className='post-item__body'>{post.body}</p>
-            <img className='post-item__image' src={'http://localhost:3010/images/' + post.image} height={150} alt={post.title} />
+            <img className='post-item__image' src={getImageUrl(post.image)} alt={post.title} />
         </div>
         <div className='post-item__footer'>
             <TextButton onClick={e => setShowComments(!showComments)}>Комментарии</TextButton>
-            <p className='post-item__date'>{moment(post.ts).format('DD.MM.YYYY hh:mm')}</p>
+            <p className='post-item__date'>{tsToDateTime(post.ts)}</p>
         </div>
         {showComments && <CommentList post={post} />}
     </article>);

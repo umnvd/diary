@@ -1,5 +1,7 @@
 .alert {
+    min-width: 200px;
     padding: 10px;
+    text-align: center;
 }
 
 .alert__message {
@@ -9,4 +11,9 @@
 .alert__buttons {
     display: flex;
     justify-content: space-between;
+}
+
+.alert__buttons button {
+    text-align: center;
+    width: 47%;
 }

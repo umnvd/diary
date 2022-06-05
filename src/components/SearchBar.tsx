@@ -8,15 +8,19 @@ interface SearchBarProps {
 }
 
 const SearchBar: FunctionComponent<SearchBarProps> = (
-    { query, sotQuery  }
+    { query, sotQuery }
 ) => {
     const handleClear = () => {
         if (query !== '')
             sotQuery('')
     }
 
+    // no debounce
     return (<div className='search-bar'>
-        <Input type="text" value={query} onChange={e => sotQuery(e.target.value)} />
+        <Input
+            type="text"
+            value={query}
+            onChange={e => sotQuery(e.target.value)} />
         <Button onClick={handleClear}>Очистить</Button>
     </div>);
 }

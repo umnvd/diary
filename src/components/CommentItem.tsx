@@ -1,6 +1,5 @@
-import axios from 'axios';
 import { FunctionComponent } from 'react';
-import { getUrl } from '../data/utils/fileUtils';
+import { getImageUrl } from '../data/axiosInstance';
 import Comment from '../models/Comment';
 import { currentUser } from '../models/User';
 import '../styles/Comment.css'
@@ -22,7 +21,7 @@ const CommentItem: FunctionComponent<CommentItemProps> = (
     }>
         <img
             className='comment-item__user-photo'
-            src={getUrl(comment.user.image)}></img>
+            src={getImageUrl(comment.user.image)}></img>
         <div className='comment-item__content'>
             <h3 className='comment-item__user-name'
             >{comment.user.name}</h3>

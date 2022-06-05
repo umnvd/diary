@@ -3,12 +3,8 @@
 }
 
 nav {
-    position: sticky;
+    position: absolute;
     top: 10px;
+    left: 10px;
 
-}
-
-nav a {
-    float: right;
-    margin-right: 10px;
 }

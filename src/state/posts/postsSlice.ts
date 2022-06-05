@@ -7,8 +7,6 @@ import { RootState } from '../store';
 
 interface PostsState {
     posts: Post[],
-    isLoading: boolean,
-    error: string,
     currentPage: number,
     maxPage: number,
     sort: SortConfig,
@@ -18,8 +16,6 @@ interface PostsState {
 
 const initialState: PostsState = {
     posts: [],
-    isLoading: false,
-    error: '',
     currentPage: 1,
     maxPage: 0,
     sort: {
@@ -34,18 +30,8 @@ const postsSlice = createSlice({
     name: 'postsUi',
     initialState: initialState,
     reducers: {
-        fetchStarted: state => {
-            state.error = '';
-            state.isLoading = true;
-        },
         fetched: (state, action: PayloadAction<Post[]>) => {
-            state.isLoading = false;
             state.posts = action.payload;
-            console.log('fetched');
-        },
-        failed: (state, action: PayloadAction<string>) => {
-            state.isLoading = false;
-            state.error = action.payload;
         },
         pageIncremented: state => {
             if (state.currentPage < state.maxPage) state.currentPage += 1;
@@ -69,7 +55,7 @@ const postsSlice = createSlice({
             state.sort = {
                 option: sortOptions[1].value,
                 order: false
-            }; // todo workaround
+            }; // workaround that doesn't work
             resetState(state);
         }
     }
@@ -77,16 +63,12 @@ const postsSlice = createSlice({
 
 function resetState(state: WritableDraft<PostsState>) {
     state.posts = [];
-    state.isLoading = false;
-    state.error = '';
     state.currentPage = 1;
     state.maxPage = 0;
 }
 
 export const {
-    fetchStarted,
     fetched,
-    failed,
     pageIncremented,
     maxPageReceived,
     sortChanged,

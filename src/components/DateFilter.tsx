@@ -1,9 +1,9 @@
-import moment from 'moment';
 import { FunctionComponent } from 'react';
 import DateFilterConfig, { defaultDateFilterConfig } from '../models/DateFilterConfig';
 import Button from './common/Button';
 import Input from './common/Input';
 import '../styles/FilterAndSort.css'
+import { dateToTs, tsToInputDate } from '../data/utils/dateUtils';
 
 interface DateFilterProps {
     config: DateFilterConfig;
@@ -15,7 +15,7 @@ const DateFilter: FunctionComponent<DateFilterProps> = (
 ) => {
     const setDate = (date: string, isStart: boolean) => {
         if (date) {
-            const ts = parseInt(moment(date).format('x'));
+            const ts = dateToTs(date);
             const newConfig = isStart
                 ? { ...config, startDate: ts }
                 : { ...config, endDate: ts };
@@ -25,7 +25,7 @@ const DateFilter: FunctionComponent<DateFilterProps> = (
 
     const toStringDate = (ts?: number) => {
         return ts
-            ? moment(ts).format('yyyy-MM-DD')
+            ? tsToInputDate(ts)
             : ''
     }
 

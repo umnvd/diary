@@ -12,3 +12,8 @@ export interface PostData {
     body: string;
     image: File;
 }
+
+export type PostsWithTotalCount = {
+    posts: Post[],
+    totalCount: number,
+}

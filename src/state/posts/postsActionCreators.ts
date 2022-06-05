@@ -1,55 +1,27 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios'
-import Post from '../../models/Post'
+import { postsService } from '../../data/PostsService';
+import { loading, setError, setSuccess } from '../../toast/Toast';
 import { AppDispatch, RootState } from '../store';
-import { failed, fetched, fetchStarted, maxPageReceived } from './postsSlice';
+import { fetched, maxPageReceived } from './postsSlice';
 
 export const fetchPosts = () => async (
     dispatch: AppDispatch,
     getState: () => RootState
 ) => {
-    console.log('fetching');
-
+    const id = loading('Загрузка записей');
     const state = getState();
-    const page = state.posts.currentPage;
-    const sortConfig = state.posts.sort;
-    const dateFilterConfig = state.posts.dateFilter;
-    const searchQuery = state.posts.searchQuery;
-
     try {
-        const config: AxiosRequestConfig = {
-            params: {
-                _sort: sortConfig.option,
-                _order: sortConfig.order ? 'asc' : 'desc',
-                _page: page,
-                _limit: 3, // hardcoded
-            }
-        }
-
-        if (dateFilterConfig.startDate) {
-            config.params = {...config.params, ts_gte: dateFilterConfig.startDate};
-        }
-
-        if (dateFilterConfig.endDate) {
-            config.params = {...config.params, ts_lte: dateFilterConfig.endDate};
-        }
-
-        if (searchQuery) {
-            config.params = {...config.params, title_like: searchQuery};
-        }
-
-        dispatch(fetchStarted());
-        const response = await axios.get<Post[]>('http://localhost:3010/posts', config);
-
+        const { posts, totalCount } = await postsService.getPosts(
+            state.posts.currentPage,
+            state.posts.searchQuery,
+            state.posts.sort,
+            state.posts.dateFilter
+        );
         if (state.posts.maxPage === 0) {
-            const totalCount = parseInt(response.headers['x-total-count']);
             dispatch(maxPageReceived(totalCount));
-            console.log('total pages received');
         }
-
-        const result = [...state.posts.posts, ...response.data]
-        dispatch(fetched(result));
+        dispatch(fetched([...state.posts.posts, ...posts]));
+        setSuccess(id, 'Записи загружены');
     } catch (e) {
-        const message = (e as AxiosError).message || 'Ошибка загрузки';
-        dispatch(failed(message));
+        setError(id, 'Ошибка загрузки записей');
     }
 }

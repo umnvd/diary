@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import NavButton from '../components/common/NavButton';
-import Modal from '../components/common/Modal';
 import PostForm from '../components/PostForm';
-import { addPost } from '../data/posts/postsService';
 import { RoutePath } from '../routes/routes';
+import { postsService } from '../data/PostsService';
 
 function NewPostPage() {
     const navigate = useNavigate();
 
     return (<div>
-        <nav>
-            <NavButton to={RoutePath.POST_LIST}>Home</NavButton>
-        </nav>
+        <nav><NavButton to={RoutePath.POST_LIST}>Список записей</NavButton></nav>
         <PostForm onSubmit={postData => {
-            addPost(postData)
+            postsService
+                .addPost(postData)
                 .then(() => navigate(RoutePath.POST_LIST, { replace: true }));
         }} />
     </div>);
