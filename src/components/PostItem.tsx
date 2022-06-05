@@ -6,11 +6,12 @@ import CommentList from './CommentList';
 
 interface PostItemProps {
     post: Post;
-    onClick: () => void;
+    onEdit: () => void;
+    onDelete: () => void;
 }
 
 const PostItem: FunctionComponent<PostItemProps> = (
-    { post, onClick }
+    { post, onEdit, onDelete }
 ) => {
     const [showComments, setShowComments] = useState(false);
 
@@ -18,8 +19,8 @@ const PostItem: FunctionComponent<PostItemProps> = (
         <div className='post-item__head'>
             <h3 className='post-item__title'>{post.title}</h3>
             <div className='post-item__actions'>
-                <button onClick={onClick}>Редактировать</button>
-                <button>Удалить</button>
+                <button onClick={onEdit}>Редактировать</button>
+                <button onClick={onDelete}>Удалить</button>
             </div>
         </div>
         <div className='post-item__content'>

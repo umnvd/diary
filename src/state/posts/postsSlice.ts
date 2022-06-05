@@ -41,6 +41,7 @@ const postsSlice = createSlice({
         fetched: (state, action: PayloadAction<Post[]>) => {
             state.isLoading = false;
             state.posts = action.payload;
+            console.log('fetched');
         },
         failed: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
@@ -64,6 +65,13 @@ const postsSlice = createSlice({
             state.searchQuery = action.payload;
             resetState(state);
         },
+        refreshed: (state) => {
+            state.sort = {
+                option: sortOptions[1].value,
+                order: false
+            }; // todo workaround
+            resetState(state);
+        }
     }
 });
 
@@ -83,7 +91,8 @@ export const {
     maxPageReceived,
     sortChanged,
     dateFilterChanged,
-    searchQueryChanged
+    searchQueryChanged,
+    refreshed
 } = postsSlice.actions;
 
 export const selectPosts = (state: RootState) => state.posts;

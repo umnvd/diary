@@ -5,3 +5,10 @@ export default interface Post {
     image: string;
     ts: number;
 }
+
+export interface PostData {
+    id: number;
+    title: string;
+    body: string;
+    image: File;
+}

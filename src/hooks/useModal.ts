@@ -5,7 +5,6 @@ function useModal<T>() {
     const [isActive, setIsActive] = useState(false);
 
     const show = (data: T) => {
-        console.log('show called')
         setSelected(data);
         setIsActive(true);
     };
@@ -15,12 +14,12 @@ function useModal<T>() {
         setIsActive(false);
     };
 
-    return [
+    return {
         isActive,
         selected,
         show,
         close
-    ];
+    };
 }
 
 export default useModal;

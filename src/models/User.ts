@@ -3,3 +3,9 @@ export default interface User {
     image: string
     role: number;
 }
+
+export const currentUser: User = {
+    name: "Митя",
+    image: "mitya.jpg",
+    role: 1
+}

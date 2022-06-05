@@ -14,7 +14,6 @@ const PagingTrigger: FunctionComponent<PagingTriggerProps> = (
         const callback: IntersectionObserverCallback = (entries, observer) => {
             if (entries[0].isIntersecting)
                 onBottomReached()
-            console.log('bottom reached');
         };
         observer.current = new IntersectionObserver(callback);
         if (lastElement.current)

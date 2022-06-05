@@ -1,8 +1,8 @@
 import { FunctionComponent } from 'react';
-import Post from '../models/Post';
+import Post , { PostData }from '../models/Post';
 import { selectPosts } from '../state/posts/postsSlice';
 import Modal from './common/Modal';
-import PostForm, { PostFormSubmitedValues } from './PostForm';
+import PostForm from './PostForm';
 
 interface EditPostModalProps {
     post?: Post;
@@ -14,7 +14,7 @@ const EditPostModal: FunctionComponent<EditPostModalProps> = (
 ) => {
     if (!post) return null;
 
-    const handleSubmit = (values: PostFormSubmitedValues) => {
+    const handleSubmit = (values: PostData) => {
         console.log(values);
         setPost(undefined);
     }

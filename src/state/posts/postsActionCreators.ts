@@ -7,6 +7,8 @@ export const fetchPosts = () => async (
     dispatch: AppDispatch,
     getState: () => RootState
 ) => {
+    console.log('fetching');
+
     const state = getState();
     const page = state.posts.currentPage;
     const sortConfig = state.posts.sort;

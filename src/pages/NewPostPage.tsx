@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Modal from '../components/common/Modal';
 import PostForm from '../components/PostForm';
+import { addPost } from '../data/posts/postsService';
 import { RoutePath } from '../routes/routes';
 
 function NewPostPage() {
-    const [test, setTest] = useState(false);
+    const navigate = useNavigate();
 
-    return ( <div>
-        <div>
+    return (<div>
+        <nav>
             <NavLink to={RoutePath.POST_LIST}>Home</NavLink>
-        </div>
-        {/* <PostForm onSubmit={v => console.log(v)}/> */}
-        <button onClick={() => setTest(true)}>open</button>
-        <Modal open={test} onClose={() => setTest(false)}>
-            <div>ABOBA</div>
-        </Modal>
-    </div> );
+        </nav>
+        <PostForm onSubmit={postData => {
+            addPost(postData)
+                .then(() => navigate(RoutePath.POST_LIST, { replace: true }));
+        }} />
+    </div>);
 }
 
 export default NewPostPage;

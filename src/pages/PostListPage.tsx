@@ -1,22 +1,27 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import axios from 'axios';
+import { useCallback, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import Alert from '../components/common/Alert';
+import AllertModal from '../components/common/Alert';
 import Modal from '../components/common/Modal';
 import DateFilter from '../components/DateFilter';
-import EditPostModal from '../components/EditPostModal';
 import PostForm from '../components/PostForm';
 import PostItem from '../components/PostItem';
 import SearchBar from '../components/SearchBar';
 import SortSelector from '../components/SortSelector';
 import PagingTrigger from '../components/utils/PagingTrigger';
+import { editPost } from '../data/posts/postsService';
 import useModal from '../hooks/useModal';
-import Post from '../models/Post';
+import Post, { PostData } from '../models/Post';
 import { sortOptions } from '../models/SortConfig';
 import { RoutePath } from '../routes/routes';
 import { useAppDispatch, useAppSelector } from '../state/hooks';
 import { fetchPosts } from '../state/posts/postsActionCreators';
 import {
     dateFilterChanged,
+    fetched,
     pageIncremented,
+    refreshed,
     searchQueryChanged,
     selectPosts,
     sortChanged
@@ -27,24 +32,48 @@ function PostListPage() {
     const { posts, isLoading, error, sort,
         currentPage, dateFilter, searchQuery } = useAppSelector(selectPosts);
 
-    const [modalIsActive, selectedPost, showModal, closeModal] = useModal();
+    const editModal = useModal<Post>();
+    const deleteModal = useModal<Post>();
 
     useEffect(() => {
         dispatch(fetchPosts());
-        console.log('fetch called')
     }, [currentPage, sort, dateFilter, searchQuery]);
 
+    useEffect(() => {
+        return () => { dispatch(refreshed) };
+    }, [])
+
+    const deletePost = async (post?: Post) => {
+        if (post)
+            await axios.delete<Comment>(
+                'http://localhost:3010/posts' + `/${post.id}`
+            )
+                .then(() => dispatch(fetched(posts.filter(p => p.id !== post.id))))
+                .then(() => deleteModal.close());
+    }
+
+    const editPost2 = async (post?: PostData) => {
+        if (post)
+        await editPost(post).then(() => dispatch(refreshed()))
+        .then(() => editModal.close())
+        .then(() => (console.log('adf')))
+    }
+
     return (<div>
-        {/* <EditPostModal post={selectedPost} setPost={setSelectedPost}></EditPostModal> */}
-        <Modal open={modalIsActive} onClose={() => closeModal()}>
-            <PostForm post={selectedPost} onSubmit={v => console.log(v)} />
+        <Modal open={editModal.isActive} onClose={editModal.close}>
+            <PostForm post={editModal.selected} onSubmit={editPost2} />
         </Modal>
-        <div>
+        <Modal open={deleteModal.isActive} onClose={deleteModal.close}>
+            <Alert message='Удалить запись?'
+                onCancel={deleteModal.close}
+                onConfirm={() => deletePost(deleteModal.selected)} />
+        </Modal>
+        <nav>
             <NavLink to={RoutePath.NEW_POST}>New</NavLink>
-        </div>
+        </nav>
         <SearchBar
             query={searchQuery}
-            setQuery={query => dispatch(searchQueryChanged(query))} />
+            sotQuery={query => dispatch(searchQueryChanged(query))} />
         <DateFilter
             config={dateFilter}
             setConfig={config => dispatch(dateFilterChanged(config))} />
@@ -53,14 +82,14 @@ function PostListPage() {
             config={sort}
             setConfig={config => dispatch(sortChanged(config))} />
         {posts.map(post =>
-            <PostItem key={post.id} post={post} onClick={() =>
-                showModal(post)
-                // console.log(post)
-            } />)}
+            <PostItem
+                key={post.id}
+                post={post}
+                onEdit={() => editModal.show(post)}
+                onDelete={() => deleteModal.show(post)} />)}
         <PagingTrigger onBottomReached={() => dispatch(pageIncremented())}></PagingTrigger>
     </div>);
 }
-
 
 // {isLoading && <h1>Loading...</h1>}
 // {error.length > 0 && <h1>{error}</h1>}
