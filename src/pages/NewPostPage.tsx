@@ -8,7 +8,7 @@ function NewPostPage() {
         <div>
             <NavLink to={RoutePath.POST_LIST}>Home</NavLink>
         </div>
-        <PostForm />
+        <PostForm onSubmit={v => console.log(v)}/>
     </div> );
 }
 

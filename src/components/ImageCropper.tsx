@@ -5,17 +5,17 @@ import '../styles/ImageCropper.css';
 
 interface ImageCropperProps {
     url: string;
-    onSave: (croppedImage: string) => void;
+    setDataUrl: (dataUrl: string) => void;
 }
 
 const ImageCropper: FunctionComponent<ImageCropperProps> = (
-    { url, onSave }
+    { url, setDataUrl }
 ) => {
     const cropperRef = useRef<HTMLImageElement>(null);
     const onCrop = () => {
         const imageElement: any = cropperRef?.current;
         const cropper: any = imageElement?.cropper;
-        onSave(cropper.getCroppedCanvas().toDataURL());
+        setDataUrl(cropper.getCroppedCanvas().toDataURL());
     };
 
     return (
