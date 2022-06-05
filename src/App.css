@@ -1,3 +1,14 @@
 .App {
-    width: 1200px;
+    width: 900px;
+}
+
+nav {
+    position: sticky;
+    top: 10px;
+
+}
+
+nav a {
+    float: right;
+    margin-right: 10px;
 }

@@ -1,0 +1,51 @@
+.button {
+    cursor: pointer;
+    padding: 5px 10px;
+    color: white;
+    background-color: mediumpurple;
+    border: 1px solid mediumpurple;
+    border-radius: 4px;
+    font-size: 16px;
+    transition-duration: 0.25s;
+}
+
+.button:hover {
+    background: transparent;
+    color: black;
+}
+
+.button:disabled,
+.button[disabled] {
+    opacity: 0.6;
+    background-color: mediumpurple;
+    color: white;
+    cursor: not-allowed;
+}
+
+.button:active {
+    background-color: gray;
+}
+
+.text-button {
+    cursor: pointer;
+    padding: 0;
+    font-size: 16px;
+    color: mediumpurple;
+    border: none;
+    background: transparent;
+    transition-duration: 0.25s;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.text-button:hover {
+    color: rebeccapurple;
+}
+
+.text-button:active {
+    background-color: mediumpurple;
+}
+
+.nav-button {
+    text-decoration: none;
+}

@@ -21,7 +21,7 @@ const PagingTrigger: FunctionComponent<PagingTriggerProps> = (
     }, []);
     return (
         <div
-            style={{ height: 1 }} // don't working if height is less than 1
+            style={{ height: 2 }} // don't working if height is less than 1
             ref={lastElement} />
     );
 }

@@ -7,6 +7,9 @@ import User, { currentUser } from '../models/User';
 import Modal from './common/Modal';
 import useModal from '../hooks/useModal';
 import Alert from './common/Alert';
+import Button from './common/Button';
+import Input from './common/Input';
+import '../styles/Comment.css'
 
 interface CommentListProps {
     post: Post;
@@ -74,12 +77,12 @@ const CommentList: FunctionComponent<CommentListProps> = (
                 key={comment.id} 
                 comment={comment} 
                 onDelete={() => deleteModal.show(comment)}/>)}
-            <div>
-                <input
+            <div className='comment-list__new-comment'>
+                <Input
                     type="text"
                     value={commentText}
                     onChange={e => setCommentText(e.target.value)} />
-                <button onClick={sendComment}>Отправить</button>
+                <Button onClick={sendComment}>Отправить</Button>
             </div>
         </section>
         </>

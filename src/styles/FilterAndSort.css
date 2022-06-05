@@ -1,0 +1,16 @@
+.date-filter,
+.search-bar {
+    display: flex
+}
+
+.date-filter>input {
+    margin-right: 10px;
+}
+.search-bar>input {
+    margin-right: 10px;
+    width: 100%;
+}
+
+.sort-buttons>button:first-child {
+    margin-right: 10px;
+}

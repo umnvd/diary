@@ -6,7 +6,10 @@ import { Formik, FieldArray, FormikHelpers, FormikHandlers, useFormikContext, Fo
 import { mixed } from 'yup';
 import { Cropper } from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
-import '../styles/ImageCropper.css';
+import '../styles/PostForm.css';
+import Input from './common/Input';
+import TextArea from './common/TextArea';
+import Button from './common/Button';
 
 interface PostFormValues {
     title: string;
@@ -105,8 +108,8 @@ const PostForm: FunctionComponent<PostFormProps> = (
         }
     }, [post, imageUrl])
 
-    return (<div>
-        <Formik
+    return (
+        <Formik className='post-form'
             initialValues={initialValues}
             validateOnBlur
             onSubmit={submitForm}
@@ -116,7 +119,7 @@ const PostForm: FunctionComponent<PostFormProps> = (
                 <>
                     <div>
                         <label htmlFor='title'>Название<br /></label>
-                        <input
+                        <Input
                             type='text'
                             name='title'
                             onChange={handleChange}
@@ -127,7 +130,7 @@ const PostForm: FunctionComponent<PostFormProps> = (
                     </div>
                     <div>
                         <label htmlFor='body'>Запись<br /></label>
-                        <textarea
+                        <TextArea
                             name='body'
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -138,7 +141,7 @@ const PostForm: FunctionComponent<PostFormProps> = (
                     <label htmlFor='image'>Изображение<br /></label>
                     <FieldArray name='image'>
                         {arrayHelper => (
-                            <input
+                            <Input
                                 type='file'
                                 name='image'
                                 accept={acceptableTypes.join(', ')}
@@ -170,16 +173,15 @@ const PostForm: FunctionComponent<PostFormProps> = (
                         responsive={true}
                         autoCropArea={1}
                         checkOrientation={false} />
-                    <button
+                    <Button
                         type='submit'
                         disabled={!isValid && !dirty}
                         onClick={() => handleSubmit()}
-                    >Отправить</button>
+                    >Отправить</Button>
                     <ResetFormOnUnmount />
                 </>
             )}
-        </Formik>
-    </div>);
+        </Formik>);
 }
 
 export default PostForm;

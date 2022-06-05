@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import NavButton from '../components/common/NavButton';
 import Modal from '../components/common/Modal';
 import PostForm from '../components/PostForm';
 import { addPost } from '../data/posts/postsService';
@@ -10,7 +11,7 @@ function NewPostPage() {
 
     return (<div>
         <nav>
-            <NavLink to={RoutePath.POST_LIST}>Home</NavLink>
+            <NavButton to={RoutePath.POST_LIST}>Home</NavButton>
         </nav>
         <PostForm onSubmit={postData => {
             addPost(postData)

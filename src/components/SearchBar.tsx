@@ -1,4 +1,6 @@
 import { FunctionComponent } from 'react';
+import Button from './common/Button';
+import Input from './common/Input';
 
 interface SearchBarProps {
     query: string;
@@ -13,9 +15,9 @@ const SearchBar: FunctionComponent<SearchBarProps> = (
             sotQuery('')
     }
 
-    return (<div>
-        <input type="text" value={query} onChange={e => sotQuery(e.target.value)} />
-        <button onClick={handleClear}>Очистить</button>
+    return (<div className='search-bar'>
+        <Input type="text" value={query} onChange={e => sotQuery(e.target.value)} />
+        <Button onClick={handleClear}>Очистить</Button>
     </div>);
 }
 

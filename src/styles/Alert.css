@@ -1,0 +1,12 @@
+.alert {
+    padding: 10px;
+}
+
+.alert__message {
+    padding-bottom: 25px;
+}
+
+.alert__buttons {
+    display: flex;
+    justify-content: space-between;
+}

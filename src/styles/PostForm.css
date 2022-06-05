@@ -1,0 +1,18 @@
+.post-form {
+    padding: 20px 0;
+    width: 900px;
+}
+
+.post-form * {
+    margin-bottom: 10px;
+}
+
+.post-form button {
+    margin: 0px;
+}
+
+.image-cropper {
+    margin: 10px 0;
+    height: 400px;
+    width: 100%;
+}

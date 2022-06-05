@@ -1,4 +1,6 @@
 import { FunctionComponent } from 'react';
+import Button from './Button';
+import '../../styles/Alert.css'
 
 interface AlertProps {
     message: string,
@@ -11,11 +13,13 @@ interface AlertProps {
 const Alert: FunctionComponent<AlertProps> = (
     { message, onConfirm, onCancel, confirm, cancel }
 ) => {
-    return (<>
-        <p>{message}</p>
-        <button onClick={onCancel}>{cancel ?? 'Отмена'}</button>
-        <button onClick={onConfirm}>{confirm ?? 'Ок'}</button>
-    </>);
+    return (<div className='alert'>
+        <p className='alert__message'>{message}</p>
+        <div className='alert__buttons'>
+            <Button onClick={onCancel}>{cancel ?? 'Отмена'}</Button>
+            <Button onClick={onConfirm}>{confirm ?? 'Ок'}</Button>
+        </div>
+    </div>);
 }
 
 export default Alert;

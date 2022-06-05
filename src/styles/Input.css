@@ -1,0 +1,15 @@
+.input {
+    padding: 5px 15px;
+    border: 1px solid mediumpurple;
+    border-radius: 4px;
+}
+
+.input:focus-within {
+    outline: 1px solid mediumpurple;
+}
+
+.text-area {
+    width: 96%;
+    min-height: 250px;
+    resize: none;
+}

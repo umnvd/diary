@@ -1,6 +1,9 @@
 import moment from 'moment';
 import { FunctionComponent } from 'react';
 import DateFilterConfig, { defaultDateFilterConfig } from '../models/DateFilterConfig';
+import Button from './common/Button';
+import Input from './common/Input';
+import '../styles/FilterAndSort.css'
 
 interface DateFilterProps {
     config: DateFilterConfig;
@@ -31,21 +34,21 @@ const DateFilter: FunctionComponent<DateFilterProps> = (
             setConfig(defaultDateFilterConfig)
     }
 
-    return (<div>
-        <input
+    return (<div className='date-filter'>
+        <Input
             type='date'
             max={toStringDate(config.endDate)}
             value={toStringDate(config.startDate)}
             onChange={e => setDate(e.target.value, true)} />
-        <input
+        <Input
             type='date'
             min={toStringDate(config.startDate)}
             value={toStringDate(config.endDate)}
             onChange={e => setDate(e.target.value, false)} />
-        <button
+        <Button
             onClick={handleClear}>
             Сбросить
-        </button>
+        </Button>
     </div>);
 }
 

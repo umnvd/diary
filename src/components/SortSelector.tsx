@@ -1,5 +1,7 @@
 import { FunctionComponent } from 'react';
 import SortConfig, { SortOption } from '../models/SortConfig';
+import { TextButton } from './common/Button';
+import '../styles/FilterAndSort.css'
 
 interface SortSelectorProps {
     options: SortOption[];
@@ -23,21 +25,21 @@ const SortSelector: FunctionComponent<SortSelectorProps> = (
     }
 
     const isActive = (option: SortOption) => option.value === config.option;
+    const arrow = (isAsc: boolean) => isAsc ?'△' : '▽';
 
-    return (<div>
+    return (<div className='sort-buttons'>
         {options.map(option =>
             isActive(option)
-                ? <button
+                ? <TextButton
                     key={option.value}
-                    onClick={_ => handleClick(option)}
-                    className={'sort-option-button-active'}>
-                    {option.title + ' ' + config.order}
-                </button>
-                : <button
+                    onClick={_ => handleClick(option)}>
+                    {option.title + ' ' + arrow(config.order)}
+                </TextButton>
+                : <TextButton
                     key={option.value}
                     onClick={_ => handleClick(option)}>
                     {option.title}
-                </button>
+                </TextButton>
         )}
     </div>);
 }

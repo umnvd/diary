@@ -1,0 +1,46 @@
+.comment-item {
+    padding: 10px;
+    border: 1px solid mediumpurple;
+    display: flex;
+    border-radius: 4px;
+}
+
+.comment-item__user-photo {
+    width: 75px;
+    height: 75px;
+}
+
+.comment-item__content {
+    margin-left: 15px;
+}
+
+.comment-item__content>* {
+    padding-bottom: 4px;
+}
+
+.comment-item__user-name {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+.current-user {
+    background-color: rgba(116, 6, 116, 0.3);
+}
+
+.comment-list {
+    margin-top: 5px;
+}
+
+.comment-list>.comment-item {
+    margin-bottom: 10px;
+}
+
+.comment-list__new-comment {
+    display: flex;
+}
+
+.comment-list__new-comment>input {
+    margin-right: 10px;
+    width: 100%;
+}

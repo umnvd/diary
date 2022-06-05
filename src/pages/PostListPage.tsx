@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import Alert from '../components/common/Alert';
 import AllertModal from '../components/common/Alert';
 import Modal from '../components/common/Modal';
+import NavButton from '../components/common/NavButton';
 import DateFilter from '../components/DateFilter';
 import PostForm from '../components/PostForm';
 import PostItem from '../components/PostItem';
@@ -54,9 +55,9 @@ function PostListPage() {
 
     const editPost2 = async (post?: PostData) => {
         if (post)
-        await editPost(post).then(() => dispatch(refreshed()))
-        .then(() => editModal.close())
-        .then(() => (console.log('adf')))
+            await editPost(post).then(() => dispatch(refreshed()))
+                .then(() => editModal.close())
+                .then(() => (console.log('adf')))
     }
 
     return (<div>
@@ -69,24 +70,30 @@ function PostListPage() {
                 onConfirm={() => deletePost(deleteModal.selected)} />
         </Modal>
         <nav>
-            <NavLink to={RoutePath.NEW_POST}>New</NavLink>
+            <NavButton to={RoutePath.NEW_POST}>New</NavButton>
         </nav>
-        <SearchBar
-            query={searchQuery}
-            sotQuery={query => dispatch(searchQueryChanged(query))} />
-        <DateFilter
-            config={dateFilter}
-            setConfig={config => dispatch(dateFilterChanged(config))} />
-        <SortSelector
-            options={sortOptions}
-            config={sort}
-            setConfig={config => dispatch(sortChanged(config))} />
-        {posts.map(post =>
-            <PostItem
-                key={post.id}
-                post={post}
-                onEdit={() => editModal.show(post)}
-                onDelete={() => deleteModal.show(post)} />)}
+        <div className='post-list__header'>
+            <div className='post-list__filter'>
+                <SearchBar
+                    query={searchQuery}
+                    sotQuery={query => dispatch(searchQueryChanged(query))} />
+                <DateFilter
+                    config={dateFilter}
+                    setConfig={config => dispatch(dateFilterChanged(config))} />
+            </div>
+            <SortSelector
+                options={sortOptions}
+                config={sort}
+                setConfig={config => dispatch(sortChanged(config))} />
+        </div>
+        <section className='post-list'>
+            {posts.map(post =>
+                <PostItem
+                    key={post.id}
+                    post={post}
+                    onEdit={() => editModal.show(post)}
+                    onDelete={() => deleteModal.show(post)} />)}
+        </section>
         <PagingTrigger onBottomReached={() => dispatch(pageIncremented())}></PagingTrigger>
     </div>);
 }
