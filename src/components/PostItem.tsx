@@ -1,15 +1,16 @@
 import moment from 'moment';
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useCallback, useState } from 'react';
 import Post from '../models/Post';
 import '../styles/PostItem.css'
 import CommentList from './CommentList';
 
 interface PostItemProps {
     post: Post;
+    onClick: () => void;
 }
 
 const PostItem: FunctionComponent<PostItemProps> = (
-    { post }
+    { post, onClick }
 ) => {
     const [showComments, setShowComments] = useState(false);
 
@@ -17,7 +18,7 @@ const PostItem: FunctionComponent<PostItemProps> = (
         <div className='post-item__head'>
             <h3 className='post-item__title'>{post.title}</h3>
             <div className='post-item__actions'>
-                <button>Редактировать</button>
+                <button onClick={onClick}>Редактировать</button>
                 <button>Удалить</button>
             </div>
         </div>

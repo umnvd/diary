@@ -1,10 +1,10 @@
-import { ChangeEvent, FunctionComponent, useState } from 'react';
+import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import Post from '../models/Post';
 import axios from 'axios';
 import ImageCropper from './ImageCropper';
 import { dataUrlToFile, FileSchema, fileSchema, getUrl, readFileDataUrl } from '../data/utils/fileUtils';
 import yup, { array, object, string } from 'yup';
-import { Formik, FieldArray, FormikErrors } from 'formik';
+import { Formik, FieldArray, FormikErrors, FormikHelpers } from 'formik';
 import { dir } from 'console';
 import { mixed } from 'yup';
 import { isArrayTypeNode } from 'typescript';
@@ -15,7 +15,7 @@ interface PostFormValues {
     image: FileSchema | undefined;
 }
 
-interface PostFormSubmitedValues {
+export interface PostFormSubmitedValues {
     title: string;
     body: string;
     image: File;
@@ -23,12 +23,14 @@ interface PostFormSubmitedValues {
 
 interface PostFormProps {
     onSubmit: (values: PostFormSubmitedValues) => void;
-    post?: Post;
+    post: Post | null;
 }
 
 const PostForm: FunctionComponent<PostFormProps> = (
     { onSubmit, post }
 ) => {
+    console.log(post);
+
     const [imageUrl, setImageUrl] = useState('');
     const [croppedImageUrl, setCroppedImageUrl] = useState('');
     const acceptableTypes = [
@@ -37,13 +39,12 @@ const PostForm: FunctionComponent<PostFormProps> = (
         'image/svg+xml',
         'image/gif'
     ];
-    const initialValues: PostFormValues = {
+
+    const initialValues : PostFormValues = {
         title: post?.title ?? '',
         body: post?.body ?? '',
         image: undefined
     }
-
-    post?.image && setImageUrl(getUrl(post.image));
 
     let imageSchema = array().of(object().shape({
         file: mixed().required(),
@@ -77,24 +78,38 @@ const PostForm: FunctionComponent<PostFormProps> = (
                 result.push(errors)
         }
         return result;
-    }
+    };
 
-    const prepareSubmit = (values: PostFormValues) => onSubmit({
+    const submitForm = (
+        values: PostFormValues,
+        helpers: FormikHelpers<PostFormValues>
+    ) => {
+        onSubmit({
             title: values.title,
             body: values.body,
             image: dataUrlToFile(
-                croppedImageUrl, 
-                values.image?.name ?? post?.image ?? 'img.'
-                )
-            })
-            console.log(imageUrl);
-    
+                croppedImageUrl,
+                values.image?.name ?? post?.image ?? 'img.jpg'
+            )
+        });
+        helpers.resetForm();
+    };
+
+    useEffect(() => {
+        if (post?.image) {
+            setImageUrl(getUrl(post.image));
+        }
+
+        return () => {
+
+        }
+    }, [post, imageUrl])
 
     return (<div>
         <Formik
             initialValues={initialValues}
             validateOnBlur
-            onSubmit={prepareSubmit}
+            onSubmit={submitForm}
             validationSchema={validationSchema}>
             {({ values, errors, touched, handleChange,
                 handleBlur, isValid, handleSubmit, dirty }) => (
@@ -121,7 +136,6 @@ const PostForm: FunctionComponent<PostFormProps> = (
                             && <p>{errors.body}</p>}
                     </div>
                     <label htmlFor='image'>Изображение<br /></label>
-                    {console.log(errors)}
                     <FieldArray name='image'>
                         {arrayHelper => (
                             <input

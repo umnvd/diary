@@ -13,7 +13,7 @@ function NewPostPage() {
         </div>
         {/* <PostForm onSubmit={v => console.log(v)}/> */}
         <button onClick={() => setTest(true)}>open</button>
-        <Modal isActive={test} setIsActive={setTest}>
+        <Modal open={test} onClose={() => setTest(false)}>
             <div>ABOBA</div>
         </Modal>
     </div> );

@@ -1,28 +1,40 @@
-import { FC, FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent, ReactNode, useEffect, useMemo } from 'react';
 import '../../styles/Modal.css'
 
+const modalRootElement = document.getElementById('modal') as HTMLElement;
+
 type ModalProps = {
-    isActive: boolean;
-    setIsActive: (isActive: boolean) => void;
+    open: boolean;
+    onClose: () => void;
     children: ReactNode;
 }
 
-const Modal: FC<ModalProps> = (
-    { isActive, setIsActive, children }
+const Modal: FunctionComponent<ModalProps> = (
+    { open, onClose, children }
 ) => {
-    return (<div
-        className={isActive
-            ? 'modal active'
-            : 'modal'}
-        onClick={() => setIsActive(false)}>
-        <div
-            className={isActive
-                ? 'modal__content active'
-                : 'modal__content'}
-            onClick={e => e.stopPropagation()}>
-            {children}
-        </div>
-    </div>);
+    const element = useMemo(() => document.createElement('div'), []);
+
+    useEffect(() => {
+        if (open) {
+            modalRootElement.appendChild(element);
+            return () => {
+                modalRootElement.removeChild(element);
+            }
+        }
+    });
+
+    if (open) {
+        return (<div
+            className={'modal'}
+            onClick={onClose}>
+            <div
+                className={'modal__content'}
+                onClick={e => e.stopPropagation()}>
+                {children}
+            </div>
+        </div>);
+    }
+    return null;
 }
 
 export default Modal;
