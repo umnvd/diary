@@ -1,4 +1,4 @@
-import { FunctionComponent, useCallback, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { getImageUrl } from '../data/axiosInstance';
 import { tsToDateTime } from '../data/utils/dateUtils';
 import Post from '../models/Post';

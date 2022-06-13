@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 
-const BASE_URL = 'http://localhost:3010/';
+const BASE_URL = 'http://localhost:8080/'
 const IMAGES_PATH = 'images/'
 
 const axiosInstance: AxiosInstance = axios.create(

@@ -13,11 +13,11 @@ function usePosts() {
 
     useEffect(() => {
         dispatch(fetchPosts());
-    }, [currentPage, sort, dateFilter, searchQuery]);
+    }, [currentPage, sort, dateFilter, searchQuery, dispatch]);
 
     useEffect(() => {
         return () => { dispatch(refreshed) };
-    }, [])
+    }, [dispatch])
 
     const deletePost = (post?: Post) => {
         if (!post) return;

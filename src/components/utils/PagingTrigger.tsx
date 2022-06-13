@@ -18,7 +18,7 @@ const PagingTrigger: FunctionComponent<PagingTriggerProps> = (
         observer.current = new IntersectionObserver(callback);
         if (lastElement.current)
             observer.current.observe(lastElement.current);
-    }, []);
+    }, [onBottomReached]);
     return (
         <div
             style={{ height: 1 }} // don't work if height is less than 1

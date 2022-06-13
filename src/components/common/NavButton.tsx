@@ -1,4 +1,4 @@
-import { AnchorHTMLAttributes, FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { NavLinkProps } from 'react-router-dom';
 import '../../styles/Button.css'

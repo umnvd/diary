@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { commentsService } from '../data/CommentsService';
 import Comment from '../models/Comment';
 import { currentUser } from '../models/User';
-import { error, loading, setError, setSuccess, success } from '../toast/Toast';
+import { loading, setError, setSuccess } from '../toast/Toast';
 
 function useComments(postId: number) {
     const [comments, setComments] = useState<Comment[]>([]);

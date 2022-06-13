@@ -21,7 +21,8 @@ const CommentItem: FunctionComponent<CommentItemProps> = (
     }>
         <img
             className='comment-item__user-photo'
-            src={getImageUrl(comment.user.image)}></img>
+            src={getImageUrl(comment.user.image)}
+            alt={comment.user.name}></img>
         <div className='comment-item__content'>
             <h3 className='comment-item__user-name'
             >{comment.user.name}</h3>
